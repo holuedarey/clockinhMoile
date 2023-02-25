@@ -1,0 +1,39 @@
+ {
+  "project_info": {
+    "project_number": "324905210681",
+    "project_id": "clocking-40cd8",
+    "storage_bucket": "clocking-40cd8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:324905210681:android:a1a41b275cd9f69f5f8ee8",
+        "android_client_info": {
+          "package_name": "com.example.clockingapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "324905210681-8hchcfgbd6ncam3roofm2c7us9tf56t2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3TKp-01h3VnThIRaz5xsM8PshgXLpJZY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "324905210681-8hchcfgbd6ncam3roofm2c7us9tf56t2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
