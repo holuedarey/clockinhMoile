@@ -3,7 +3,6 @@ import 'package:flutter/foundation.dart';
 
 import '../Components/page_state_widget.dart';
 import '../Services/auth_services.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 part '../Feature/onboarding/signup_state.dart';
 
@@ -19,14 +18,12 @@ class SignUpUserProvider with ChangeNotifier {
     pageState = PageState.loading;
     notifyListeners();
     try {
-      var res = await AuthService.signUpFirebase(email:email, password: password);
-      await AuthService.saveUserInfoToFireStore(firstname: firstname, lastname: lastname, address: address, phoneNumber: phoneNumber);
+      var res = await AuthService.signUp(email:email, password: password, firstname: firstname, lastname: lastname, address: address, phoneNumber: phoneNumber);
       signUpUserState.loginSuccess("Registration Successful");
       pageState = PageState.loaded;
       notifyListeners();
-    } on FirebaseAuthException catch (ex) {
-      print(ex);
-      signUpUserState.loginError(ex.message.toString());
+    } catch (ex) {
+      signUpUserState.loginError(ex.toString());
       pageState = PageState.loaded;
       notifyListeners();
     }

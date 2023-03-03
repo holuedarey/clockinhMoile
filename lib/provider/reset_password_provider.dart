@@ -14,11 +14,11 @@ class OtpUserProvider with ChangeNotifier {
   // }
 
   void submitUserResetPassword(
-      ResetPasswordState resetPasswordState, {required String phone}) async {
+      ResetPasswordState resetPasswordState, {required String email, required String password, required String token}) async {
     pageState = PageState.loading;
     notifyListeners();
     try {
-      var res = await AuthService.forgetPassword(phone: phone);
+      var res = await AuthService.changePassword(email: email, password: password, token: token);
       resetPasswordState.resetSuccess("userModel.message.toString()");
       pageState = PageState.loaded;
       notifyListeners();

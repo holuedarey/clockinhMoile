@@ -3,7 +3,10 @@ import 'dart:io';
 import 'package:clockingapp/provider/clocking_provider.dart';
 import 'package:clockingapp/provider/login_user_provider.dart';
 import 'package:clockingapp/provider/signup_provider.dart';
+import 'package:clockingapp/provider/user_clocking_provider.dart';
 import 'package:flutter/material.dart';
+import 'Data/models/user.dart';
+import 'Helper/storage_keys.dart';
 import 'Util/storage.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,35 +18,21 @@ import 'Views/onboarding/login_page.dart';
 import 'Views/onboarding/onboarding_page.dart';
 import 'Views/onboarding/signup_page.dart';
 import 'provider/forget_password_provider.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
-
-Future main() async{
-
+Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.removeAfter(initialization);
-  if (Platform.isIOS) {
-    await Firebase.initializeApp(
-        options: FirebaseOptions(
-            apiKey: "your api key Found in GoogleService-info.plist",
-            appId: "Your app id found in Firebase",
-            messagingSenderId: "Your Sender id found in Firebase",
-            projectId: "Your Project id found in Firebase"));
-  } else {
-    await Firebase.initializeApp();
-  }
-  bool  showHome = false;
+
+  bool showHome = false;
   bool showDashboard = false;
-  final firebaseUser = await FirebaseAuth.instance.currentUser;
-  final firstTime = await LocalStorageUtils.readBool('isFirstTime') ??  false;
-
-  if(firebaseUser != null){
-    showDashboard =  true;
+  final userData = await LocalStorageUtils.readObject<UserModel>(StorageKeys.userObject);
+  final firstTime = await LocalStorageUtils.readBool('isFirstTime') ?? false;
+  if (userData != null) {
+    showDashboard = true;
   }
 
-  if(firstTime && firebaseUser == null){
-    showHome =  true;
+  if (firstTime && userData == null) {
+    showHome = true;
   }
 
   runApp(
@@ -53,12 +42,12 @@ Future main() async{
         ChangeNotifierProvider(create: (_) => SignUpUserProvider()),
         ChangeNotifierProvider(create: (_) => ForgetPasswordProvider()),
         ChangeNotifierProvider(create: (_) => ClockingProvider()),
+        ChangeNotifierProvider(create: (_) => UserClockingProvider()),
       ],
-      child: MyApp(showHome: showHome, showDashboard : showDashboard),
+      child: MyApp(showHome: showHome, showDashboard: showDashboard),
     ),
   );
 }
-
 
 Future initialization(BuildContext? context) async {
   await Future.delayed(const Duration(seconds: 0));
@@ -67,7 +56,9 @@ Future initialization(BuildContext? context) async {
 class MyApp extends StatelessWidget {
   final bool showDashboard;
   final bool showHome;
+
   const MyApp({super.key, required this.showDashboard, required this.showHome});
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -81,7 +72,11 @@ class MyApp extends StatelessWidget {
           // You can use the library anywhere in the app even in theme
           theme: kThemeData,
           routes: {
-            '/': (context) => showDashboard ? const DashBoardPage()  : showHome ? const LoginPage() : OnboardingPage(),
+            '/': (context) => showDashboard
+                ? const DashBoardPage()
+                : showHome
+                    ? const LoginPage()
+                    : OnboardingPage(),
             '/login': (context) => const LoginPage(),
             '/register': (context) => const SignUpPage(),
             '/forget_password': (context) => const ForgetPasswordPage(),
@@ -92,4 +87,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-

@@ -37,8 +37,9 @@ class _ClockingPagePageState extends State<ClockingPage>
 
   final checkingPurposes = [
     "Checking Into Job",
-    "Out for Lunch",
-    "Checking Out of Job"
+    "Checking Out of Job",
+    "Break Check-Out",
+    "Break Check-In",
   ];
   String? siteName;
   String? checkingPurpose;

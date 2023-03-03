@@ -10,16 +10,16 @@ part '../Feature/onboarding/login_state.dart';
 class LoginUserProvider with ChangeNotifier {
   PageState pageState = PageState.loaded;
 
-  // set setLoginView(LoginUserState view) {
-  //   _loginUserState = view;
-  // }
-
   void submitUserLogin(
   LoginUserState loginUserState, {required String phone, required String password}) async {
     pageState = PageState.loading;
     notifyListeners();
     try {
-      var res = await AuthService.loginFirebase(phone: phone, password: password);
+      var res = await AuthService.login(email: phone, password: password);
+      UserModel userModel = UserModel.fromJson(res);
+      UserTokenManager.insertAccessToken(userModel.data?.token ?? "");
+      LocalStorageUtils.saveObject<UserModel>(
+          StorageKeys.userObject, userModel);
       pageState = PageState.loaded;
       loginUserState.loginSuccess("Login successful");
       notifyListeners();

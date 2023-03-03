@@ -18,7 +18,7 @@ class ForgetPasswordProvider with ChangeNotifier {
     pageState = PageState.loading;
     notifyListeners();
     try {
-      var res = await AuthService.forgetPasswordFirebase(email: email);
+      var res = await AuthService.forgetPassword(email: email);
       // UserModel userModel = UserModel.fromJson(res);
       forgetPasswordState.forgetSuccess("Check your email for password reset link. ");
       email = "";

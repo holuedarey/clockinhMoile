@@ -4,36 +4,19 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../Data/http_service.dart';
 import '../Util/endpoint.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ClockingService {
   static Future<dynamic> createClocking(
       {required String name, required String clockingPurpose}) async {
-    var firebaseUser = FirebaseAuth.instance.currentUser;
 
     Map<String, dynamic> payload = {
       'site_name': name,
       'clocking_purpose': clockingPurpose,
-      'user_id': firebaseUser?.uid,
-      'clocking_date_time': DateTime.now(),
+      'clocking_date_time': DateTime.now().toString(),
     };
-    FirebaseFirestore.instance
-        .collection("attendance")
-        .add(payload)
-        .then((_) => print('Success'));
-    DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(firebaseUser?.uid)
-        .get();
 
-
-    var response = await sendEmail(documentSnapshot['firstname'], 'sngcheckin@gmail.com',
-        "New Clocking from ${documentSnapshot['firstname']}  ${documentSnapshot['lastname']} at ${DateTime.now()} for $clockingPurpose at $name");
-
-
-     await sendEmail(documentSnapshot['firstname'], "${firebaseUser?.email}",
-        "You $clockingPurpose on ${DateTime.now()} at $name");
+    final response = await HttpService.postVerb(APiEndPoint.createClockingEndpoint,body: payload,  addAuthToken: true);
+    return HttpService.parseResponse(response);
   }
 
   static Future sendEmail(String name, String email, String message) async {
@@ -60,12 +43,9 @@ class ClockingService {
     return response.body;
   }
 
-  static Future<dynamic> myClocking({required String name}) async {
-    Map<String, String> payload = {
-      "name": name,
-    };
+  static Future<dynamic> myClocking() async {
     final response =
-        await HttpService.patch(APiEndPoint.subAccountEndpoint, payload);
+        await HttpService.getVerb(APiEndPoint.mylockingEndpoint,  addAuthToken: true);
     return HttpService.parseResponse(response);
   }
 

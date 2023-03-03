@@ -2,10 +2,10 @@ import 'package:clockingapp/Helper/sting_helper.dart';
 import 'package:clockingapp/Services/auth_services.dart';
 import 'package:clockingapp/Views/clocking/new_clocking.dart';
 import 'package:flutter/material.dart';
+import '../../Data/models/user.dart';
+import '../../Helper/storage_keys.dart';
 import '../../Util/constant.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../Util/storage.dart';
 class DashBoardPage extends StatefulWidget {
   const DashBoardPage({Key? key}) : super(key: key);
 
@@ -29,12 +29,9 @@ class _DashBoardPageState extends State<DashBoardPage> {
 
 
   Future<Null> getSharedPrefs() async {
-    final firebaseUser = await FirebaseAuth.instance.currentUser;
-    DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance.collection('users').doc(firebaseUser?.uid).get();
-    // print(documentSnapshot.data());
-    final userRecord = documentSnapshot;
+    final userData  = await LocalStorageUtils.readObject<UserModel>(StorageKeys.userObject);
     setState(() {
-      name = userRecord['displayName'] ?? "";
+      name = (userData['data']['user']['firstname'].toString() ?? "");
     });
   }
 
