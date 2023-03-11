@@ -51,7 +51,7 @@ class ClockingService {
 
   static Future<dynamic> viewAllClocking() async {
     final response = await HttpService.getVerb(
-      APiEndPoint.subAccountEndpoint,
+      APiEndPoint.mylockingEndpoint,
       addAuthToken: true,
     );
     return HttpService.parseResponse(response);
@@ -59,8 +59,13 @@ class ClockingService {
 
   static Future<dynamic> viewSingleClocking(id) async {
     final response = await HttpService.getVerb(
-        "${APiEndPoint.subAccountEndpoint}$id",
+        "${APiEndPoint.mylockingEndpoint}$id",
         addAuthToken: true);
+    return HttpService.parseResponse(response);
+  }
+
+  static Future<dynamic> allLocations() async {
+    final response = await HttpService.getVerb(APiEndPoint.locationEndpoint, addAuthToken: true);
     return HttpService.parseResponse(response);
   }
 }

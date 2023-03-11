@@ -1,4 +1,4 @@
-import 'package:clockingapp/provider/user_clocking_provider.dart';
+import 'package:sng/provider/user_clocking_provider.dart';
 import 'package:flutter/material.dart';
 import '../../Components/page_state_widget.dart';
 import '../../Data/models/user.dart';

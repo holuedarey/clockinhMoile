@@ -1,4 +1,4 @@
-part of 'package:clockingapp/provider/login_user_provider.dart';
+part of 'package:sng/provider/login_user_provider.dart';
 
 abstract class LoginUserState {
   void loginSuccess(String msg);

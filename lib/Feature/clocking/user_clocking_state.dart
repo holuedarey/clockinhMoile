@@ -1,4 +1,4 @@
-part of 'package:clockingapp/provider/user_clocking_provider.dart';
+part of 'package:sng/provider/user_clocking_provider.dart';
 
 abstract class UserClockingState {
   void clockingSuccess(String msg);

@@ -6,5 +6,6 @@ class StorageKeys {
   static const String notificationsEnabled = "notificationsEnabled";
 
   static const String userName = "userName";
+  static const String userEmail = "userEmail";
   static const String fullyRegistered = "fullyRegistered";
 }

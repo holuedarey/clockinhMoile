@@ -1,9 +1,11 @@
 import 'dart:io';
 
-import 'package:clockingapp/provider/clocking_provider.dart';
-import 'package:clockingapp/provider/login_user_provider.dart';
-import 'package:clockingapp/provider/signup_provider.dart';
-import 'package:clockingapp/provider/user_clocking_provider.dart';
+import 'package:sng/provider/clocking_provider.dart';
+import 'package:sng/provider/location_provider.dart';
+import 'package:sng/provider/login_user_provider.dart';
+import 'package:sng/provider/reset_password_provider.dart';
+import 'package:sng/provider/signup_provider.dart';
+import 'package:sng/provider/user_clocking_provider.dart';
 import 'package:flutter/material.dart';
 import 'Data/models/user.dart';
 import 'Helper/storage_keys.dart';
@@ -43,6 +45,8 @@ Future main() async {
         ChangeNotifierProvider(create: (_) => ForgetPasswordProvider()),
         ChangeNotifierProvider(create: (_) => ClockingProvider()),
         ChangeNotifierProvider(create: (_) => UserClockingProvider()),
+        ChangeNotifierProvider(create: (_) => ResetUserProvider()),
+        ChangeNotifierProvider(create: (_) => LocationProvider()),
       ],
       child: MyApp(showHome: showHome, showDashboard: showDashboard),
     ),

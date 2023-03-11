@@ -1,12 +1,14 @@
 import 'package:flutter/foundation.dart';
 
 import '../Components/page_state_widget.dart';
+import '../Helper/storage_keys.dart';
 import '../Services/auth_services.dart';
+import '../Util/storage.dart';
 
 
 part '../Feature/onboarding/reset_password_state.dart';
 
-class OtpUserProvider with ChangeNotifier {
+class ResetUserProvider with ChangeNotifier {
   PageState pageState = PageState.loaded;
 
   // set setLoginView(LoginUserState view) {
@@ -18,8 +20,9 @@ class OtpUserProvider with ChangeNotifier {
     pageState = PageState.loading;
     notifyListeners();
     try {
-      var res = await AuthService.changePassword(email: email, password: password, token: token);
-      resetPasswordState.resetSuccess("userModel.message.toString()");
+      final email = await LocalStorageUtils.read(StorageKeys.userEmail);
+      var res = await AuthService.changePassword(email: email!, password: password, token: token);
+      resetPasswordState.resetSuccess("Password Change successfully");
       pageState = PageState.loaded;
       notifyListeners();
     } catch (ex) {

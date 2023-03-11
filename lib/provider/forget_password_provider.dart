@@ -2,7 +2,9 @@ import 'package:flutter/foundation.dart';
 
 import '../Components/page_state_widget.dart';
 import '../Data/models/user.dart';
+import '../Helper/storage_keys.dart';
 import '../Services/auth_services.dart';
+import '../Util/storage.dart';
 
 part '../Feature/onboarding/forget_password_state.dart';
 
@@ -20,8 +22,8 @@ class ForgetPasswordProvider with ChangeNotifier {
     try {
       var res = await AuthService.forgetPassword(email: email);
       // UserModel userModel = UserModel.fromJson(res);
+      await LocalStorageUtils.write(StorageKeys.userEmail, email);
       forgetPasswordState.forgetSuccess("Check your email for password reset link. ");
-      email = "";
       pageState = PageState.loaded;
       notifyListeners();
     } catch (ex) {

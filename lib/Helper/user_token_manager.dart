@@ -1,4 +1,4 @@
-import 'package:clockingapp/Helper/storage_keys.dart';
+import 'package:sng/Helper/storage_keys.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class UserTokenManager {

@@ -1,4 +1,5 @@
-import 'package:clockingapp/provider/clocking_provider.dart';
+import 'package:sng/provider/clocking_provider.dart';
+import 'package:sng/provider/location_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,22 +18,13 @@ class ClockingPage extends StatefulWidget {
 
 class _ClockingPagePageState extends State<ClockingPage>
     implements ClockingState {
-
   final _formKey = GlobalKey<FormState>();
 
-  final siteNames = [
-    "Bookwell",
-    "Catherine Street",
-    "Dentholme",
-    "Duke Street",
-    "Ennerdale",
-    "Fleece",
-    "Lily Lane",
-    "Primrose",
-    "Sawery House",
-    "Swinley House",
-    "Station House",
-    "Warrington Road",
+  dynamic siteNames = [
+    "Checking Into Job",
+    "Checking Out of Job",
+    "Break Check-Out",
+    "Break Check-In",
   ];
 
   final checkingPurposes = [
@@ -43,6 +35,16 @@ class _ClockingPagePageState extends State<ClockingPage>
   ];
   String? siteName;
   String? checkingPurpose;
+
+
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () async {
+      final dataProvider = Provider.of<LocationProvider>(context, listen: false);
+      dataProvider.fetchLocation(this);
+      print(dataProvider);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +59,9 @@ class _ClockingPagePageState extends State<ClockingPage>
             title: Text(
               "Create Sign in / Out",
               style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                  fontSize: 20, fontWeight: FontWeight.w500, color: Colors.black),
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black),
             ),
             centerTitle: true,
           ),
@@ -78,7 +82,9 @@ class _ClockingPagePageState extends State<ClockingPage>
           children: [
             Column(
               children: [
-                const SizedBox(height: 30,),
+                const SizedBox(
+                  height: 30,
+                ),
                 SizedBox(height: kPadding),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: kExtraFullPadding),
@@ -100,46 +106,50 @@ class _ClockingPagePageState extends State<ClockingPage>
                         child: Text(
                           "Site Name",
                           textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                            fontSize: 14,
-                            fontWeight: FontWeight.normal,
-                            color: Colors.black,
-                          ),
+                          style:
+                              Theme.of(context).textTheme.bodyText1?.copyWith(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.normal,
+                                    color: Colors.black,
+                                  ),
                         ),
                       ),
                       SizedBox(
                         height: kPaddingSmall,
                       ),
-                      Container(
-                        padding: EdgeInsets.only(left: 5.0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(1.0),
-                          border: Border.all(color: Colors.black, width: 0),
-                        ),
-                        child: DropdownButtonFormField<String>(
-                          value: siteName,
-                          isExpanded: true,
-                          // icon: const Icon(Icons.arrow_downward),
-                          elevation: 2,
-                          dropdownColor: kSecondaryTextColor,
-                          style: const TextStyle(color: Colors.black),
-                          validator: (value) => value == null
-                              ? 'Please fill in your Site Name': null,
-                          onChanged: (String? value) {
-                            // This is called when the user selects an item.
-                            setState(() {
-                              siteName = value!;
-                            });
-                          },
-                          items: siteNames
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                        ),
-                      ),
+                      Consumer<LocationProvider>(builder: (context, state, _) {
+                        return Container(
+                          padding: EdgeInsets.only(left: 5.0),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(1.0),
+                            border: Border.all(color: Colors.black, width: 0),
+                          ),
+                          child: DropdownButtonFormField<String>(
+                            value: siteName,
+                            isExpanded: true,
+                            // icon: const Icon(Icons.arrow_downward),
+                            elevation: 2,
+                            dropdownColor: kSecondaryTextColor,
+                            style: const TextStyle(color: Colors.black),
+                            validator: (value) => value == null
+                                ? 'Please fill in your Site Name'
+                                : null,
+                            onChanged: (String? value) {
+                              // This is called when the user selects an item.
+                              setState(() {
+                                siteName = value!;
+                              });
+                            },
+                            items: state.response
+                                .map<DropdownMenuItem<String>>((dynamic value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                          ),
+                        );
+                      }),
                       SizedBox(
                         height: kPadding,
                       ),
@@ -148,11 +158,12 @@ class _ClockingPagePageState extends State<ClockingPage>
                         child: Text(
                           "Check In / Out Purpose",
                           textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                            fontSize: 14,
-                            fontWeight: FontWeight.normal,
-                            color: Colors.black,
-                          ),
+                          style:
+                              Theme.of(context).textTheme.bodyText1?.copyWith(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.normal,
+                                    color: Colors.black,
+                                  ),
                         ),
                       ),
                       SizedBox(
@@ -177,7 +188,8 @@ class _ClockingPagePageState extends State<ClockingPage>
                           //   color: Colors.white,
                           // ),
                           validator: (value) => value == null
-                              ? 'Please fill in your Check in / out': null,
+                              ? 'Please fill in your Check in / out'
+                              : null,
                           onChanged: (String? value) {
                             // This is called when the user selects an item.
                             setState(() {
@@ -210,7 +222,9 @@ class _ClockingPagePageState extends State<ClockingPage>
                                         !_formKey.currentState!.validate())
                                     ? null
                                     : state.submitClocking(
-                                        this, siteName: siteName, clockingPurpose: checkingPurpose,
+                                        this,
+                                        siteName: siteName,
+                                        clockingPurpose: checkingPurpose,
                                       ),
                             buttonColor: primaryColor,
                             buttonRadius: 12.0,
@@ -239,9 +253,7 @@ class _ClockingPagePageState extends State<ClockingPage>
         statusColor: true,
       ),
       margin: EdgeInsets.only(
-          bottom: MediaQuery.of(context).size.height - 10,
-          right: 0,
-          left: 20),
+          bottom: MediaQuery.of(context).size.height - 10, right: 0, left: 20),
       behavior: SnackBarBehavior.floating,
       backgroundColor: Colors.transparent,
       elevation: 0,
@@ -250,7 +262,6 @@ class _ClockingPagePageState extends State<ClockingPage>
 
   @override
   void clockingSuccess(String msg) {
-
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const DashBoardPage()),

@@ -1,12 +1,12 @@
 import 'package:sng/Data/models/base.dart';
 
-class AddClocking  extends BaseModel{
+class AllLocation extends BaseModel {
   int? status;
   List<Data>? data;
 
-  AddClocking({this.status, this.data});
+  AllLocation({this.status, this.data});
 
-  AddClocking.fromJson(Map<String, dynamic> json) {
+  AllLocation.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     if (json['data'] != null) {
       data = <Data>[];
@@ -28,30 +28,21 @@ class AddClocking  extends BaseModel{
 
 class Data {
   String? sId;
-  String? clockingDateTime;
-  String? siteName;
-  String? clockingPurpose;
-  String? userId;
+  String? name;
   String? createdAt;
   String? updatedAt;
   int? iV;
 
   Data(
       {this.sId,
-        this.clockingDateTime,
-        this.siteName,
-        this.clockingPurpose,
-        this.userId,
+        this.name,
         this.createdAt,
         this.updatedAt,
         this.iV});
 
   Data.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
-    clockingDateTime = json['clocking_date_time'];
-    siteName = json['site_name'];
-    clockingPurpose = json['clocking_purpose'];
-    userId = json['user_id'];
+    name = json['name'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     iV = json['__v'];
@@ -60,10 +51,7 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['_id'] = this.sId;
-    data['clocking_date_time'] = this.clockingDateTime;
-    data['site_name'] = this.siteName;
-    data['clocking_purpose'] = this.clockingPurpose;
-    data['user_id'] = this.userId;
+    data['name'] = this.name;
     data['createdAt'] = this.createdAt;
     data['updatedAt'] = this.updatedAt;
     data['__v'] = this.iV;

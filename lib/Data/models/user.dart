@@ -1,4 +1,4 @@
-import 'package:clockingapp/Data/models/base.dart';
+import 'package:sng/Data/models/base.dart';
 
 class UserModel extends BaseModel{
   int? status;

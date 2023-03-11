@@ -1,3 +1,4 @@
+import 'package:sng/Views/onboarding/change_password.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -170,5 +171,11 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> implements Forg
       backgroundColor: Colors.transparent,
       elevation: 0,
     ));
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const ChangePasswordPage()),
+    );
   }
+
 }

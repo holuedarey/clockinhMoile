@@ -1,6 +1,6 @@
-import 'package:clockingapp/Helper/sting_helper.dart';
-import 'package:clockingapp/Services/auth_services.dart';
-import 'package:clockingapp/Views/clocking/new_clocking.dart';
+import 'package:sng/Helper/sting_helper.dart';
+import 'package:sng/Services/auth_services.dart';
+import 'package:sng/Views/clocking/new_clocking.dart';
 import 'package:flutter/material.dart';
 import '../../Data/models/user.dart';
 import '../../Helper/storage_keys.dart';

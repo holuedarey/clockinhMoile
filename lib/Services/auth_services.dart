@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:clockingapp/Views/onboarding/login_page.dart';
-import 'package:clockingapp/Views/profile/profile_page.dart';
+import 'package:sng/Views/onboarding/login_page.dart';
+import 'package:sng/Views/profile/profile_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -71,15 +71,13 @@ class AuthService {
       "token":token,
       "password":password
     };
-    final response = await HttpService.postVerb(APiEndPoint.forgetPasswordEndpoint,
-        body: payload, addAuthToken: false, urlEncodedForm: false);
+    final response = await HttpService.patch(APiEndPoint.forgetPasswordEndpoint, payload, false);
     return HttpService.parseResponse(response);
   }
   static Future logout(context) async {
     await LocalStorageUtils.delete(StorageKeys.userObject);
     Navigator.pushReplacement(
       context, MaterialPageRoute(builder: (context) => const LoginPage()),
-
     );
   }
 

@@ -1,4 +1,4 @@
-import 'package:clockingapp/Views/onboarding/signup_page.dart';
+import 'package:sng/Views/onboarding/signup_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

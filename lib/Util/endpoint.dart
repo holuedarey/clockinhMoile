@@ -9,7 +9,7 @@ class APiEndPoint{
   static String mylockingEndpoint = '/clocking/my_clocking';
 
 
-  static String subAccountEndpoint = '/subaccounts/';
+  static String locationEndpoint = '/location/';
 
 
 }

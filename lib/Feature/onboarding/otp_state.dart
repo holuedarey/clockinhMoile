@@ -1,4 +1,4 @@
-part of 'package:clockingapp/provider/otp_provider.dart';
+part of 'package:sng/provider/otp_provider.dart';
 
 abstract class OtpUserState {
   void otpSuccess(String msg);
