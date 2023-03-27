@@ -1,12 +1,12 @@
 import 'package:sng/Data/models/base.dart';
 
-class UserModel extends BaseModel{
+class UserProfile  extends BaseModel{
   int? status;
   Data? data;
 
-  UserModel({this.status, this.data});
+  UserProfile({this.status, this.data});
 
-  UserModel.fromJson(Map<String, dynamic> json) {
+  UserProfile.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     data = json['data'] != null ? new Data.fromJson(json['data']) : null;
   }
@@ -22,27 +22,6 @@ class UserModel extends BaseModel{
 }
 
 class Data {
-  String? token;
-  User? user;
-
-  Data({this.token, this.user});
-
-  Data.fromJson(Map<String, dynamic> json) {
-    token = json['token'];
-    user = json['user'] != null ? new User.fromJson(json['user']) : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['token'] = this.token;
-    if (this.user != null) {
-      data['user'] = this.user!.toJson();
-    }
-    return data;
-  }
-}
-
-class User {
   Profile? profile;
   List<String>? roles;
   bool? acceptTerms;
@@ -52,12 +31,14 @@ class User {
   String? firstname;
   String? lastname;
   String? email;
+  String? password;
   String? position;
   String? createdAt;
   String? updatedAt;
   int? iV;
+  String? emailtoken;
 
-  User(
+  Data(
       {this.profile,
         this.roles,
         this.acceptTerms,
@@ -67,12 +48,14 @@ class User {
         this.firstname,
         this.lastname,
         this.email,
+        this.password,
         this.position,
         this.createdAt,
         this.updatedAt,
-        this.iV});
+        this.iV,
+        this.emailtoken});
 
-  User.fromJson(Map<String, dynamic> json) {
+  Data.fromJson(Map<String, dynamic> json) {
     profile =
     json['profile'] != null ? new Profile.fromJson(json['profile']) : null;
     roles = json['roles'].cast<String>();
@@ -83,10 +66,12 @@ class User {
     firstname = json['firstname'];
     lastname = json['lastname'];
     email = json['email'];
+    password = json['password'];
     position = json['position'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     iV = json['__v'];
+    emailtoken = json['emailtoken'];
   }
 
   Map<String, dynamic> toJson() {
@@ -102,10 +87,12 @@ class User {
     data['firstname'] = this.firstname;
     data['lastname'] = this.lastname;
     data['email'] = this.email;
+    data['password'] = this.password;
     data['position'] = this.position;
     data['createdAt'] = this.createdAt;
     data['updatedAt'] = this.updatedAt;
     data['__v'] = this.iV;
+    data['emailtoken'] = this.emailtoken;
     return data;
   }
 }

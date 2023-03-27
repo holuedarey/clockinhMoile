@@ -366,8 +366,6 @@ class _SignUpPageFormState extends State<SignUpPageForm>
         message: message,
         statusColor: false,
       ),
-      margin: EdgeInsets.only(
-          bottom: MediaQuery.of(context).size.height - 20, right: 0, left: 20),
       behavior: SnackBarBehavior.floating,
       backgroundColor: Colors.transparent,
       elevation: 0,

@@ -21,7 +21,13 @@ class LoginUserProvider with ChangeNotifier {
       LocalStorageUtils.saveObject<UserModel>(
           StorageKeys.userObject, userModel);
       pageState = PageState.loaded;
-      loginUserState.loginSuccess("Login successful");
+      if(userModel.data?.user?.acceptTerms == false){
+        loginUserState.loginSteppedRegistration(userModel);
+      }else if(userModel.data?.user?.isProfile == false){
+        loginUserState.loginProfileRegistration(userModel);
+      }else{
+        loginUserState.loginSuccess("Login successful");
+      }
       notifyListeners();
     } catch (ex) {
       loginUserState.loginError(ex.toString());

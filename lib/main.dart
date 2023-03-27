@@ -1,10 +1,12 @@
 import 'dart:io';
 
 import 'package:sng/provider/clocking_provider.dart';
+import 'package:sng/provider/create_profile_provider.dart';
 import 'package:sng/provider/location_provider.dart';
 import 'package:sng/provider/login_user_provider.dart';
 import 'package:sng/provider/reset_password_provider.dart';
 import 'package:sng/provider/signup_provider.dart';
+import 'package:sng/provider/terms_provider.dart';
 import 'package:sng/provider/user_clocking_provider.dart';
 import 'package:flutter/material.dart';
 import 'Data/models/user.dart';
@@ -47,6 +49,8 @@ Future main() async {
         ChangeNotifierProvider(create: (_) => UserClockingProvider()),
         ChangeNotifierProvider(create: (_) => ResetUserProvider()),
         ChangeNotifierProvider(create: (_) => LocationProvider()),
+        ChangeNotifierProvider(create: (_) => TermsProvider()),
+        ChangeNotifierProvider(create: (_) => SetUpProfileProvider()),
       ],
       child: MyApp(showHome: showHome, showDashboard: showDashboard),
     ),

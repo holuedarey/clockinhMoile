@@ -162,10 +162,6 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> implements Rese
         title: 'Oh Snap Error',
         message: error, statusColor: true,
       ),
-      margin: EdgeInsets.only(
-          bottom: MediaQuery.of(context).size.height - 10,
-          right: 0,
-          left: 20),
       behavior: SnackBarBehavior.floating,
       backgroundColor: Colors.transparent,
       elevation: 0,

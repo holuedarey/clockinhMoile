@@ -10,6 +10,8 @@ class APiEndPoint{
 
 
   static String locationEndpoint = '/location/';
+  static String createTermsEndpoint = '/clocking/terms';
+  static String createProfileEndpoint = '/users/profile';
 
 
 }

@@ -19,6 +19,16 @@ class ClockingService {
     return HttpService.parseResponse(response);
   }
 
+  static Future<dynamic> createTerms() async {
+
+    Map<String, dynamic> payload = {
+      'terms': true,
+    };
+
+    final response = await HttpService.postVerb(APiEndPoint.createTermsEndpoint,body: payload,  addAuthToken: true);
+    return HttpService.parseResponse(response);
+  }
+
   static Future sendEmail(String name, String email, String message) async {
     final url = Uri.parse('https://api.emailjs.com/api/v1.0/email/send');
     const serviceId = 'service_ccykj6h';

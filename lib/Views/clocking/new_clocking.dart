@@ -1,3 +1,4 @@
+import 'package:sng/Views/onboarding/login_page.dart';
 import 'package:sng/provider/clocking_provider.dart';
 import 'package:sng/provider/location_provider.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +41,8 @@ class _ClockingPagePageState extends State<ClockingPage>
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () async {
-      final dataProvider = Provider.of<LocationProvider>(context, listen: false);
+      final dataProvider = Provider.of<LocationProvider>(
+          context, listen: false);
       dataProvider.fetchLocation(this);
       print(dataProvider);
     });
@@ -58,7 +60,11 @@ class _ClockingPagePageState extends State<ClockingPage>
             ),
             title: Text(
               "Create Sign in / Out",
-              style: Theme.of(context).textTheme.bodyText1?.copyWith(
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .bodyText1
+                  ?.copyWith(
                   fontSize: 20,
                   fontWeight: FontWeight.w500,
                   color: Colors.black),
@@ -91,7 +97,11 @@ class _ClockingPagePageState extends State<ClockingPage>
                   child: Text(
                       'We need a few more details to create your sign In / Out',
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .bodyText1
+                          ?.copyWith(
                           fontSize: 15,
                           fontWeight: FontWeight.normal,
                           color: kSubtextColor)),
@@ -107,11 +117,15 @@ class _ClockingPagePageState extends State<ClockingPage>
                           "Site Name",
                           textAlign: TextAlign.center,
                           style:
-                              Theme.of(context).textTheme.bodyText1?.copyWith(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.normal,
-                                    color: Colors.black,
-                                  ),
+                          Theme
+                              .of(context)
+                              .textTheme
+                              .bodyText1
+                              ?.copyWith(
+                            fontSize: 14,
+                            fontWeight: FontWeight.normal,
+                            color: Colors.black,
+                          ),
                         ),
                       ),
                       SizedBox(
@@ -131,7 +145,8 @@ class _ClockingPagePageState extends State<ClockingPage>
                             elevation: 2,
                             dropdownColor: kSecondaryTextColor,
                             style: const TextStyle(color: Colors.black),
-                            validator: (value) => value == null
+                            validator: (value) =>
+                            value == null
                                 ? 'Please fill in your Site Name'
                                 : null,
                             onChanged: (String? value) {
@@ -159,11 +174,15 @@ class _ClockingPagePageState extends State<ClockingPage>
                           "Check In / Out Purpose",
                           textAlign: TextAlign.center,
                           style:
-                              Theme.of(context).textTheme.bodyText1?.copyWith(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.normal,
-                                    color: Colors.black,
-                                  ),
+                          Theme
+                              .of(context)
+                              .textTheme
+                              .bodyText1
+                              ?.copyWith(
+                            fontSize: 14,
+                            fontWeight: FontWeight.normal,
+                            color: Colors.black,
+                          ),
                         ),
                       ),
                       SizedBox(
@@ -187,7 +206,8 @@ class _ClockingPagePageState extends State<ClockingPage>
                           //   // height: 2,
                           //   color: Colors.white,
                           // ),
-                          validator: (value) => value == null
+                          validator: (value) =>
+                          value == null
                               ? 'Please fill in your Check in / out'
                               : null,
                           onChanged: (String? value) {
@@ -213,19 +233,19 @@ class _ClockingPagePageState extends State<ClockingPage>
                       ),
                       Padding(
                           padding:
-                              EdgeInsets.symmetric(vertical: kRegularPadding),
+                          EdgeInsets.symmetric(vertical: kRegularPadding),
                           child: PhButton(
                             buttonName: 'Create Clocking',
                             isLoading: state.pageState == PageState.loading,
                             buttonCallBack: () =>
-                                (state.pageState == PageState.loading ||
-                                        !_formKey.currentState!.validate())
-                                    ? null
-                                    : state.submitClocking(
-                                        this,
-                                        siteName: siteName,
-                                        clockingPurpose: checkingPurpose,
-                                      ),
+                            (state.pageState == PageState.loading ||
+                                !_formKey.currentState!.validate())
+                                ? null
+                                : state.submitClocking(
+                              this,
+                              siteName: siteName,
+                              clockingPurpose: checkingPurpose,
+                            ),
                             buttonColor: primaryColor,
                             buttonRadius: 12.0,
                             buttonHeight: 50.0,
@@ -246,35 +266,40 @@ class _ClockingPagePageState extends State<ClockingPage>
 
   @override
   void clcokingError(String error) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: PhFlashMessage(
-        title: 'Oh Snap Error',
-        message: error,
-        statusColor: true,
-      ),
-      margin: EdgeInsets.only(
-          bottom: MediaQuery.of(context).size.height - 10, right: 0, left: 20),
-      behavior: SnackBarBehavior.floating,
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-    ));
+    if (error == "Kindly log out and login to accept terms") {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const LoginPage()),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: PhFlashMessage(
+          title: 'Oh Snap Error',
+          message: error,
+          statusColor: true,
+        ),
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ));
+    }
   }
 
-  @override
-  void clockingSuccess(String msg) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const DashBoardPage()),
-    );
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: PhFlashMessage(
-        title: 'Successful',
-        message: msg,
-        statusColor: false,
-      ),
-      behavior: SnackBarBehavior.floating,
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-    ));
+    @override
+    void clockingSuccess(String msg) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const DashBoardPage()),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: PhFlashMessage(
+          title: 'Successful',
+          message: msg,
+          statusColor: false,
+        ),
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ));
+    }
   }
-}

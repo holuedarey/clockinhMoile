@@ -24,6 +24,20 @@ class AuthService {
     return HttpService.parseResponse(response);
   }
 
+  static Future<dynamic> createProfile({required String ni, required String utr, required String address, required String dob, required String nok, required String nokRelation, required String nokPhone, }) async {
+    Map<String, dynamic> payload = {
+      "ni": ni,
+      "address": address,
+      "dob":dob,
+      "UTR": utr,
+      "nok": nok,
+      "nokRelation":nokRelation,
+      "nokPhone": nokPhone
+    };
+
+    final response = await HttpService.patch(APiEndPoint.createProfileEndpoint,payload, true);
+    return HttpService.parseResponse(response);
+  }
 
   static Future<dynamic> signUp(
       {required String password,  required String email, required String firstname, required String lastname, required String address, required String phoneNumber}) async {

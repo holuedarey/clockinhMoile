@@ -1,10 +1,11 @@
 import 'package:sng/Views/onboarding/signup_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sng/Views/profile/setup_profile.dart';
+import 'package:sng/Views/terms/terms_page.dart';
 
 import '../../Components/page_state_widget.dart';
 import '../../Controllers/signup_validator.dart';
-import '../../Data/models/user.dart';
 import '../../Util/constant.dart';
 import '../../component/header_logo.dart';
 import '../../component/ph_button.dart';
@@ -188,19 +189,12 @@ class _LoginPageFormState extends State<LoginPageForm>
 
   @override
   void loginError(String error) {
-    print("got to error");
-    print(error);
-
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: PhFlashMessage(
         title: 'Oh Snap Error',
         message: error,
         statusColor: true,
       ),
-      margin: EdgeInsets.only(
-          bottom: MediaQuery.of(context).size.height - 100,
-          right: 0,
-          left: 20),
       behavior: SnackBarBehavior.floating,
       backgroundColor: Colors.transparent,
       elevation: 0,
@@ -209,12 +203,10 @@ class _LoginPageFormState extends State<LoginPageForm>
 
   @override
   void loginSteppedRegistration(user) {
-    // Navigator.pushReplacement(
-    //   context,
-    //   // MaterialPageRoute(builder: (context) => const ProfilePage()),
-    //   MaterialPageRoute(builder: (context) => DashBoardPage()),
-    //
-    // );
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const TermsPage()),
+    );
   }
 
   @override
@@ -225,4 +217,11 @@ class _LoginPageFormState extends State<LoginPageForm>
     );
   }
 
+  @override
+  void loginProfileRegistration(user) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const SetUpProfilePage()),
+    );
+  }
 }

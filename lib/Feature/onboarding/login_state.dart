@@ -4,4 +4,5 @@ abstract class LoginUserState {
   void loginSuccess(String msg);
   void loginError(String error);
   void loginSteppedRegistration(user);
+  void loginProfileRegistration(user);
 }
